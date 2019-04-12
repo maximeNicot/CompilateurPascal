@@ -62,7 +62,7 @@ instruction  returns[Type type]: 'read' '(' variable ')'
         pcode.add(new Instruction.INN());
         pcode.add(new Instruction.STO());
     }
-|
+    |
     'write' '(' expression ')'
     {
         $type=$expression.type;
@@ -107,6 +107,32 @@ instruction  returns[Type type]: 'read' '(' variable ')'
         Instruction.BZE bze=(Instruction.BZE) pcode.get(ligneBZE);
         bze.setParam(pcode.size());
      }
+     |
+     {int ligneBRN=pcode.size();}
+     'for' ID ':=' expression
+        (('to' expression
+            {
+                int ligneBZE=pcode.size();
+                pcode.add(new Instruction.BZE(0));
+            }
+            'do' instructions
+            {
+                pcode.add(new Instruction.BRN(ligneBRN));
+                Instruction.BZE bze=(Instruction.BZE) pcode.get(ligneBZE);
+                bze.setParam(pcode.size());
+            })
+        |
+        ('downto' expression
+            {
+                int ligneBZE=pcode.size();
+                pcode.add(new Instruction.BZE(0));
+            }
+            'do' instructions
+            {
+                pcode.add(new Instruction.BRN(ligneBRN));
+                Instruction.BZE bze=(Instruction.BZE) pcode.get(ligneBZE);
+                bze.setParam(pcode.size());
+            }))
     ;
 
 simpleexpression returns[Type type]:
@@ -159,7 +185,12 @@ expression returns[Type type]:simpleexpression{$type=$simpleexpression.type;}
     {
         pcode.add(new Instruction.GEQ());
     }
-    ;
+    |
+    simpleexpression 'in' simpleexpression
+    {
+
+    }
+    ; // manque in
 
 variable returns[Type type]:ID
  {      Data d=table.get($ID.text);
@@ -196,7 +227,10 @@ term returns[Type type]:factor
 {
     $type=$factor.type;
 } ('*'factor{pcode.add(new Instruction.MUL());}
-|'/'factor{pcode.add(new Instruction.DIV());})*;
+|'/'factor{pcode.add(new Instruction.DIV());}
+|'div'factor{pcode.add(new Instruction.DIV());}
+
+)*; // ici mettre mod et /\
 
 
 

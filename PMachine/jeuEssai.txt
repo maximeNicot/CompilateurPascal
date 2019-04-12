@@ -1,3 +1,11 @@
+1---------------
+var a,b : integer
+begin
+read(a);
+write(a)
+end.
+
+2---------------
 var a,b : integer ; var c : integer
 begin
 while a <2 do
@@ -9,4 +17,13 @@ while a <2 do
         end;
     write(a)
     end
+end.
+
+3-----------------
+var a,b : integer ; var c : integer
+begin
+for i := 5 to 10 do
+begin
+	write(b)
+end;
 end.
