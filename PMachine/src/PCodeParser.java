@@ -219,7 +219,7 @@ public class PCodeParser extends Parser {
 				{
 				setState(17);
 				match(T__2);
-				pcode.add(new Instruction.MULT());
+				pcode.add(new Instruction.MUL());
 				}
 				break;
 			case 4:

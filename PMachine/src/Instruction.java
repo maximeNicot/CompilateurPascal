@@ -39,14 +39,14 @@ public interface Instruction {
         }
     }
 
-    public static class MULT implements Instruction {
+    public static class MUL implements Instruction {
         public void exec(PMachine pMachine){
             pMachine.mem[pMachine.SP-2] *= pMachine.mem[pMachine.SP-1];
             pMachine.SP--;
             pMachine.PC++;
         }
         public String toString(){
-            return "MULT";
+            return "MUL";
         }
     }
 
@@ -229,6 +229,10 @@ public interface Instruction {
             this.param = param;
         }
 
+        public void setParam(int param) {
+            this.param = param;
+        }
+
         public void exec(PMachine pMachine){
             pMachine.PC = param;
         }
@@ -244,6 +248,9 @@ public interface Instruction {
             this.param = param;
         }
 
+        public void setParam(int param) {
+            this.param = param;
+        }
         public void exec(PMachine pMachine){
             if (pMachine.mem[pMachine.SP-1] == 0)
                 pMachine.PC = param;

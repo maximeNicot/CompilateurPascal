@@ -45,11 +45,11 @@ declaration : 'var' ID
 };
 
 typi returns[Type type]:
-'integer'{$type=new Entier();}
+'integer'{$type=new Type.MyInt();}
 |'array' '[' INT']''of' typi{
-    $type=new Tab($INT.int,$typi.type);
+    $type=new Type.MyTab($INT.int,$typi.type);
 }
-|'boolean'{$type= new Boolean();}
+|'boolean'{$type= new Type.MyBoolean();}
 |'type'  typi{} (';' typi)* 'end'
 ; // ici mettre record et boolean?
 
@@ -108,6 +108,8 @@ instruction  returns[Type type]: 'read' '(' variable ')'
         bze.setParam(pcode.size());
      }
      |
+     'repeat' instructions (';' instructions)* 'until' expression //mettre le pcode
+     |
      {int ligneBRN=pcode.size();}
      'for' ID ':=' expression
         (('to' expression
@@ -133,6 +135,7 @@ instruction  returns[Type type]: 'read' '(' variable ')'
                 Instruction.BZE bze=(Instruction.BZE) pcode.get(ligneBZE);
                 bze.setParam(pcode.size());
             }))
+
     ;
 
 simpleexpression returns[Type type]:
@@ -193,13 +196,13 @@ expression returns[Type type]:simpleexpression{$type=$simpleexpression.type;}
     ; // manque in
 
 variable returns[Type type]:ID
- {      Data d=table.get($ID.text);
+ {      Donnee d=table.getDonnee($ID.text); //Data
         Type t=d.getType();
         $type=t;
         pcode.add(new Instruction.LDA(d.getAdresse()));
     }
     ('['expression{
-        t=((Tab)t).getType();
+        t=((Type.MyTab)t).getType();
         $type=t;
         pcode.add(new Instruction.LDI(t.size()));
         pcode.add(new Instruction.MUL());
@@ -210,7 +213,7 @@ variable returns[Type type]:ID
 factor returns[Type type]:INT
     {
         pcode.add(new Instruction.LDI($INT.int));
-        $type=new Entier();
+        $type=new Type.MyInt();
     }
 |variable
     {
