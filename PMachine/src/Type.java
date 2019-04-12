@@ -15,9 +15,6 @@ public interface Type {
 
     public static class MyTab implements Type{
         int taille;
-
-
-
         Type type;
 
         public MyTab(int taille, Type type) {

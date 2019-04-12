@@ -16,7 +16,7 @@ public class Main {
 
 
 
-
+/*
     public static void main2(String[] args) throws Exception {
         String file = args.length==0 ? "toto.asm" : args[0];
 
@@ -28,5 +28,5 @@ public class Main {
         System.out.println(pMachine);
         pMachine.exec();
     }
-
+*/
 }

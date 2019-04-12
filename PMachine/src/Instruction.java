@@ -6,7 +6,7 @@ public interface Instruction {
     public void exec(PMachine pMachine);
 
     /*
-    instruction : 'ADD' | 'SUB' | 'MULT' | 'DIV' |
+    instruction : 'ADD' | 'SUB' | 'MUL' | 'DIV' |
     'EQL' | 'NEQ'| 'GTR' | 'LSS' | 'GEQ' | 'LEQ' |
     'PRN' | 'INN' |
     'INC' ('-')? INT |
