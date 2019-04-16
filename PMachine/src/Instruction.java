@@ -266,7 +266,7 @@ public interface Instruction {
 
     public static class HLT implements Instruction {
         public String toString(){
-            return "STO";
+            return "HLT";
         }
         public void exec(PMachine pMachine){
             pMachine.run = false;

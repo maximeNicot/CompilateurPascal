@@ -108,28 +108,40 @@ instruction  returns[Type type]: 'read' '(' variable ')'
         bze.setParam(pcode.size());
      }
      |
-     'repeat' instructions (';' instructions)* 'until' expression //mettre le pcode
-     |
+     /*
+     {int ligneBRN=pcode.size();}
+     'repeat' instruction (';' instruction)* // pas bon
+     {
+        pcode.add(new Instruction.BRN(ligneBRN));
+        Instruction.BZE bze=(Instruction.BZE) pcode.get(ligneBZE);
+        bze.setParam(pcode.size());
+     }
+     'until' expression
+     {
+        int ligneBZE=pcode.size();
+        pcode.add(new Instruction.BZE(0));
+     }
+     |*/
      {int ligneBRN=pcode.size();}
      'for' ID ':=' expression
-        (('to' expression
+        (('to' expression 'do'  //faut INC +1?
             {
                 int ligneBZE=pcode.size();
                 pcode.add(new Instruction.BZE(0));
             }
-            'do' instructions
+            instructions
             {
                 pcode.add(new Instruction.BRN(ligneBRN));
                 Instruction.BZE bze=(Instruction.BZE) pcode.get(ligneBZE);
                 bze.setParam(pcode.size());
             })
         |
-        ('downto' expression
+        ('downto' expression 'do' //faut INC -1?
             {
                 int ligneBZE=pcode.size();
                 pcode.add(new Instruction.BZE(0));
             }
-            'do' instructions
+            instructions
             {
                 pcode.add(new Instruction.BRN(ligneBRN));
                 Instruction.BZE bze=(Instruction.BZE) pcode.get(ligneBZE);
@@ -196,12 +208,12 @@ expression returns[Type type]:simpleexpression{$type=$simpleexpression.type;}
     ; // manque in
 
 variable returns[Type type]:ID
- {      Donnee d=table.getDonnee($ID.text); //Data
-        Type t=d.getType();
+    {   Donnee donnee = table.getDonnee($ID.text);
+        Type t = donnee.getType();
         $type=t;
-        pcode.add(new Instruction.LDA(d.getAdresse()));
+        pcode.add(new Instruction.LDA(donnee.getAdresse()));
     }
-    ('['expression{
+    ('['expression{ //pour les MyTab
         t=((Type.MyTab)t).getType();
         $type=t;
         pcode.add(new Instruction.LDI(t.size()));

@@ -108,6 +108,7 @@ instruction  returns[Type type]: 'read' '(' variable ')'
         bze.setParam(pcode.size());
      }
      |
+     /*
      {int ligneBRN=pcode.size();}
      'repeat' instruction (';' instruction)* // pas bon
      {
@@ -120,7 +121,7 @@ instruction  returns[Type type]: 'read' '(' variable ')'
         int ligneBZE=pcode.size();
         pcode.add(new Instruction.BZE(0));
      }
-     |
+     |*/
      {int ligneBRN=pcode.size();}
      'for' ID ':=' expression
         (('to' expression 'do'  //faut INC +1?
@@ -207,10 +208,10 @@ expression returns[Type type]:simpleexpression{$type=$simpleexpression.type;}
     ; // manque in
 
 variable returns[Type type]:ID
- {      Donnee d=table.getDonnee($ID.text); //Data
-        Type t=d.getType();
+    {   Donnee donnee = table.getDonnee($ID.text);
+        Type t = donnee.getType();
         $type=t;
-        pcode.add(new Instruction.LDA(d.getAdresse()));
+        pcode.add(new Instruction.LDA(donnee.getAdresse()));
     }
     ('['expression{ //pour les MyTab
         t=((Type.MyTab)t).getType();

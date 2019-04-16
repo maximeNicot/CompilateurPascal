@@ -8,22 +8,41 @@ end.
 2---------------
 var a,b : integer ; var c : integer
 begin
-while a <2 do
-    begin
+  while a <2 do
+  begin
     read(a);
     if a < 2 then
-        begin
-        a := 1+2
-        end;
+    begin
+      a := a+1
+    end;
     write(a)
-    end
+  end
 end.
 
 3-----------------
-var a,b : integer ; var c : integer
+var a,b : integer
 begin
-for i := 5 to 10 do
+  write(a);
+  for a := 0 to 2 do
+  begin
+    read(a);
+    write(a)
+  end
+end.
+
+4-----------------
+var a : integer
 begin
-	write(b)
-end;
+repeat
+  a := a+1;
+  a := a+2
+until a >10;
+write(a)
+end.
+
+5----------------faux tab
+var a : array[10] of integer
+begin
+a[2] := 2;
+write(a[2])
 end.

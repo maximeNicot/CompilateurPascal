@@ -31,7 +31,7 @@ public interface Type {
     }
 
     public static class MyRecord implements Type{
-        int taille = 0;
+        int taille;
         Type[] types;
 
         public int size(){

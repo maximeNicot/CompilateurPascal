@@ -18,7 +18,7 @@ program : ((INT)? instruction)*;
 
 instruction : 'ADD' {pcode.add(new Instruction.ADD());} |
     'SUB' {pcode.add(new Instruction.SUB());} |
-    'MULT' {pcode.add(new Instruction.MULT());} |
+    'MUL' {pcode.add(new Instruction.MUL());} |
     'DIV' {pcode.add(new Instruction.DIV());} |
     'EQL' {pcode.add(new Instruction.EQL());} |
     'NEQ' {pcode.add(new Instruction.NEQ());}|
